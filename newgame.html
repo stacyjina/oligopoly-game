@@ -17,16 +17,27 @@
     <p>Description. This is an economic game that may help you to understand the way oligopolies work 
         and get to know the prisoner's dilemma.</p>
 
-    <h2>
-        <input id="game_name" name="game_name" style="text-align: center" class="span8 required" type="text" value="game">
-
-        <select id="players_number" name="players_number" path="players_number" style="text-align: center;width:65px;height: 25px;">
-            <option value="3" style="text-align: center;">3</option>
-            <option value="4" style="text-align: center;">4</option>	
-            <option value="5" selected="selected" style="text-align: center;">5</option>	
-            <option value="6" style="text-align: center;">6</option>				
-        </select>
-    </h2>  
+    <div>
+        <div>
+            <label class="label" for="game_name">Name of the Game</label>
+            <br>
+            <input id="game_name" name="game_name" style="text-align: center" class="span8 required" type="text" value="game">
+        </div>
+        <div>
+            <label class="label" for="players_number">Players</label>
+            <br>
+            <select id="players_number" name="players_number" path="players_number" style="text-align: center;width:65px;height: 25px;">
+                <option value="3" style="text-align: center;">3</option>
+                <option value="4" style="text-align: center;">4</option>	
+                <option value="5" selected="selected" style="text-align: center;">5</option>	
+                <option value="6" style="text-align: center;">6</option>				
+            </select>
+        </div>
+        <div class="span1 offset2">
+            <br>
+            <input class="btn btn-primary" name="submit" type="submit" value="Get Logins ">
+        </div>
+    </div> 
 
 </body>
 </html>
