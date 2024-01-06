@@ -35,12 +35,12 @@
                             <form id="loginFormItem" name="f" action="/j_spring_security_check" method="POST" class="dropdown-menus ng-pristine ng-valid">
                                 
                                 <div class="form-group">
-                                    <label>Login</label>
+                                    <label for="loginInputField">Login</label>
                                     <br>
                                     <input id="loginInputField" type="text" name="j_username" style="text-align: center" value="login">
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
+                                    <label for="passwordInputField">Password</label>
                                     <br>
                                     <input id="passwordInputField" type="password" name="j_password" style="text-align: center" value="password">
                                 </div>
@@ -57,6 +57,43 @@
             </ul>
         </div>
 
+    </div>
+
+    <!-- Title -->
+
+    <h1 class="title">The Oligopoly Game</h1>
+
+    <div class="description">
+        <p>This is a multiplayer economic game that will teach you the way oligopolies work and 
+            will get you acquainted with the prisoner's dilemma.</p>
+    </div>
+
+    <div class="new-or-existing">
+        <p>If you are an instructor press the button below to create a new game. 
+            If you want to enter an existing game -- log in via the top bar.</p>
+    </div>
+
+    <button class="new-game" type="menu">New game</button>
+
+    <div class="dropdown-form">
+        <form class="px-4 py-3">
+            <div class="mb-3">
+                <label for="exampleDropdownFormEmail1" class="form-label">Name of the game</label>
+                <br>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="my game">
+            </div>
+            <div class="mb-3">
+                <label class="label" for="players_number">Players</label>
+                <br>
+                <select id="players_number" name="players_number" path="players_number" style="text-align: center;width:65px;height: 25px;">
+                    <option value="3" style="text-align: center;">3</option>
+                    <option value="4" style="text-align: center;">4</option>	
+                    <option value="5" selected="selected" style="text-align: center;">5</option>	
+                    <option value="6" style="text-align: center;">6</option>				
+                </select>            
+            </div>
+            <button type="submit" class="btn btn-primary">Create a game</button>
+        </form>
     </div>
 </body>
 </html>
