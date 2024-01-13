@@ -1,3 +1,7 @@
+<?php 
+    require_once("db.php")
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,12 +41,12 @@
                                 <div class="form-group">
                                     <label for="loginInputField">Login</label>
                                     <br>
-                                    <input id="loginInputField" type="text" name="j_username" style="text-align: center" value="login">
+                                    <input id="loginInputField" type="text" name="j_username" style="text-align: center" placeholder="login">
                                 </div>
                                 <div class="form-group">
                                     <label for="passwordInputField">Password</label>
                                     <br>
-                                    <input id="passwordInputField" type="password" name="j_password" style="text-align: center" value="password">
+                                    <input id="passwordInputField" type="password" name="j_password" style="text-align: center" placeholder="password">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-success btn-block">Login</button>
@@ -73,7 +77,7 @@
             If you want to enter an existing game -- log in via the top bar.</p>
     </div>
 
-    <button class="new-game" type="menu">New game</button>
+    <!-- <button class="new-game" type="menu">New game</button> -->
 
     <div class="dropdown-form">
         <form class="px-4 py-3" action="index.php" method="post">
@@ -99,12 +103,15 @@
     <div class="logins">
         <?php
             if (isset($_POST["submit"])) {
-                foreach ($_POST as $key => $value) {
-                    echo "{$key} -> {$value} <br>";
-                }
+                echo"These are you logins for entering the game: <br>";
                 for ($i = 1; $i <= $_POST["players_number"]; $i++) {
                     echo "login{$i}: {$_POST["gamename"]}{$i} <br>";
+                    $query = "insert into players (login, password) values ('{$_POST["gamename"]}{$i}', '{$_POST["gamename"]}');";
+                    mysqli_query($conn, $query);
                 }
+                echo "Password is the name of the game. The instructor can join the game via login <strong>{$_POST["gamename"]}_admin</strong>";
+                $query = "insert into players (login, password) values ('{$_POST["gamename"]}_admin', '{$_POST["gamename"]}');";
+                mysqli_query($conn, $query);
             }
         ?>
         <!-- <ul class="logins">
