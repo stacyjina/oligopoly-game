@@ -20,14 +20,14 @@
     <div class="navbar">
         <div class="nav container"> 
             <div class="brand"> 
-                <a class="brand" href="#"> 
+                <a class="brand" href="./index.php"> 
                     <span class="brandname">The Oligopoly Game</span> 
                 </a>
             </div>
 
             <ul class="nav buttons"> 
                 <li class="nav link"> 
-                    <a href="#">Home</a>
+                    <a href="./index.php">Home</a>
                 </li>
                 <li class="nav link"> 
                     <a href="#" class="dropdown-toggle" role="button" aria-expanded="false">
@@ -103,14 +103,20 @@
     <div class="logins">
         <?php
             if (isset($_POST["submit"])) {
+                $gamename = $_POST["gamename"];
+                $query = "insert into gamenames (name) values ('{$gamename}')";
+                mysqli_query($conn, $query);
+                $query = "select count(*) from gamenames where name = '{$gamename}'";
+                $res = mysqli_query($conn, $query)->fetch_all()[0][0];
+                $gamename .= "{$res}";
                 echo"These are you logins for entering the game: <br>";
                 for ($i = 1; $i <= $_POST["players_number"]; $i++) {
-                    echo "login{$i}: {$_POST["gamename"]}{$i} <br>";
-                    $query = "insert into players (login, password) values ('{$_POST["gamename"]}{$i}', '{$_POST["gamename"]}');";
+                    echo "login{$i}: {$gamename}_{$i} <br>";
+                    $query = "insert into players (login, password) values ('{$gamename}_{$i}', '{$gamename}');";
                     mysqli_query($conn, $query);
                 }
-                echo "Password is the name of the game. The instructor can join the game via login <strong>{$_POST["gamename"]}_admin</strong>";
-                $query = "insert into players (login, password) values ('{$_POST["gamename"]}_admin', '{$_POST["gamename"]}');";
+                echo "Password is <strong>{$gamename}</strong>. The instructor can join the game via login <strong>{$gamename}_admin</strong>.";
+                $query = "insert into players (login, password) values ('{$gamename}_admin', '{$gamename}');";
                 mysqli_query($conn, $query);
             }
         ?>
