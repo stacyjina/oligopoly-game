@@ -1,5 +1,6 @@
 <?php 
-    require_once("db.php")
+    require_once("db.php");
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +18,10 @@
     
     <!-- Navigation bar -->
 
-    <div class="navbar">
+    <?php 
+        include("navbar.php");
+    ?>
+    <!-- <div class="navbar">
         <div class="nav container"> 
             <div class="brand"> 
                 <a class="brand" href="./index.php"> 
@@ -30,30 +34,13 @@
                     <a href="./index.php">Home</a>
                 </li>
                 <li class="nav link"> 
-                    <a href="#" class="dropdown-toggle" role="button" aria-expanded="false">
-                        Login</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li id="fast-login-form-area">
-                            <form id="loginFormItem" name="f" action="index.php" method="POST" class="dropdown-menus ng-pristine ng-valid">
-                                
-                                <div class="form-group">
-                                    <label for="loginInputField">Login</label>
-                                    <br>
-                                    <input id="loginInputField" type="text" name="j_username" style="text-align: center" placeholder="login">
-                                </div>
-                                <div class="form-group">
-                                    <label for="passwordInputField">Password</label>
-                                    <br>
-                                    <input id="passwordInputField" type="password" name="j_password" style="text-align: center" placeholder="password">
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-success btn-block">Login</button>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
+                    <?php 
+                        if (isset($_SESSION['login'])) {
+                            include("logout_button.html");
+                        } else {
+                            include("login_button.php");
+                        }
+                    ?>
                 </li>
                 <li class="nav link"> 
                     <a href="#">About</a>
@@ -61,7 +48,7 @@
             </ul>
         </div>
 
-    </div>
+    </div> -->
 
     <!-- Title -->
 
@@ -109,7 +96,7 @@
                 $query = "select count(*) from gamenames where name = '{$gamename}'";
                 $res = mysqli_query($conn, $query)->fetch_all()[0][0];
                 $gamename .= "{$res}";
-                echo"These are you logins for entering the game: <br>";
+                echo"These are your logins for entering the game: <br>";
                 for ($i = 1; $i <= $_POST["players_number"]; $i++) {
                     echo "login{$i}: {$gamename}_{$i} <br>";
                     $query = "insert into players (login, password) values ('{$gamename}_{$i}', '{$gamename}');";
@@ -120,9 +107,6 @@
                 mysqli_query($conn, $query);
             }
         ?>
-        <!-- <ul class="logins">
-            <li></li>
-        </ul> -->
     </div>
 </body>
 </html>
