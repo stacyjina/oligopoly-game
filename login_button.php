@@ -12,6 +12,8 @@
                 $res = mysqli_query($conn, $query)->fetch_all()[0][0];
                 if ($res != 0) {
                     $_SESSION["login"] = $login;
+                    $_SESSION["gamename"] = $password;
+                    $_SESSION["round"] = 1;
                     header("Location: game_page.php");
                 }
                 else {
