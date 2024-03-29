@@ -7,6 +7,9 @@
     $round = $_SESSION["round"];
     $game = new Game();
     $game->load_game($conn, $login, $gamename, $round);
+    if (isset($_POST["start"])) {
+        $_SESSION["start"] = True;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +27,8 @@
     ?>
 
     <?php
-        if (isset($_POST["start"]) or isset($_POST["move"])) {
+        // if (isset($_POST["start"]) or isset($_POST["move"])) {
+        if (isset($_SESSION["start"])) {
             echo "There will be game <br>";
             echo "Demand function of an aggregated consumer:";
             $price = $game->max_price * $game->num_players;
@@ -48,21 +52,23 @@
                     $table_html .= "<td> {$list["p"]} </td> <td> {$list["profit"]} </td> </tr>";
                 }
                 $table_html .= "</table>";
-                // здесь потом будет цикл наверн
                 echo $table_html;
             }
-            if (isset($_POST["move"])) {
-                echo "Your choice: Y = {$_POST["yield"]}, PR = {$_POST["pr"]}";
-            } else {
-            $sliders = "<form class='sliders' method='post' action='game_page.php'>";
+            echo "<div id='choice'></div>";
+            $sliders = "<form class='sliders' >";
+            // method='post' action='game_page.php'
             $sliders .= "<div class='sliders'> 
-                            <input type='range' min='0' max='{$game->max_price}' value='0' name='yield'>
-                            <input type='range' min='0' max='{$game->max_price}' value='0' name='pr'>
+                            <input type='range' min='0' max='{$game->max_price}' value='0' name='yield' id='yield'
+                                oninput='this.nextElementSibling.value = this.value'>
+                            <output>0</output>
+                            <input type='range' min='0' max='{$game->max_price}' value='0' name='pr' id='pr'
+                                oninput='this.nextElementSibling.value = this.value'>
+                            <output>0</output>
                         </div>";
-            $sliders .= "<button type='submit' name='move'> Save choice </button>";
+            $sliders .= "<button type='submit' name='move' id='move'> Save choice </button>";
             $sliders .= "</form>";
             echo $sliders;
-            }
+            
 
         } else {
             echo "Game rules: ................... <br> Press a button below if you are ready to start.<br>";
@@ -77,6 +83,8 @@
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/action.js"></script>
 
 </body>
 </html>
