@@ -29,13 +29,12 @@
     <?php
         // if (isset($_POST["start"]) or isset($_POST["move"])) {
         if (isset($_SESSION["start"])) {
-            echo "There will be game <br>";
+            echo "Round {$game->cur_round}";
             echo "Demand function of an aggregated consumer:";
             $price = $game->max_price * $game->num_players;
             echo "$$ p = {$price} - \\Sigma_{i = 1}^n y_i $$";
             echo "Your firm's profit function:";
-            echo "$$ \\pi = (p + 0,2 r \\cdot p) \\cdot y - 20y - 100r $$";
-            // $game->save_choice(20, 60);
+            echo "$$ \\pi = (p + 0.02 r \\cdot p) \\cdot y - 20y - 100r $$";
             if ($round != 1) {
                 $table_html = "<table>";
                 $table_html .= "<colgroup> 
@@ -77,9 +76,6 @@
                 </form>';
         }
     ?>
-    <!-- <form class="start" method="POST" action="game_page.php"> 
-        <button type="submit" name="start"> Start a game </button>
-    </form> -->
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

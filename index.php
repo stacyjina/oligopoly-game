@@ -11,8 +11,6 @@
     <title>The Oligopoly Game</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/style.css'>
-    <!-- <link rel='stylesheet' type='text/css' media='screen' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'> -->
-    <!-- <script src='main.js'></script> -->
 </head>
 <body>
     
@@ -21,34 +19,6 @@
     <?php 
         include("navbar.php");
     ?>
-    <!-- <div class="navbar">
-        <div class="nav container"> 
-            <div class="brand"> 
-                <a class="brand" href="./index.php"> 
-                    <span class="brandname">The Oligopoly Game</span> 
-                </a>
-            </div>
-
-            <ul class="nav buttons"> 
-                <li class="nav link"> 
-                    <a href="./index.php">Home</a>
-                </li>
-                <li class="nav link"> 
-                    <?php 
-                        if (isset($_SESSION['login'])) {
-                            include("logout_button.html");
-                        } else {
-                            include("login_button.php");
-                        }
-                    ?>
-                </li>
-                <li class="nav link"> 
-                    <a href="#">About</a>
-                </li>
-            </ul>
-        </div>
-
-    </div> -->
 
     <!-- Title -->
 
@@ -102,11 +72,15 @@
                     $query = "insert into players (login, password) values ('{$gamename}_{$i}', '{$gamename}');";
                     mysqli_query($conn, $query);
                 }
-                echo "Password is <strong>{$gamename}</strong>. The instructor can join the game via login <strong>{$gamename}_admin</strong>.";
-                $query = "insert into players (login, password) values ('{$gamename}_admin', '{$gamename}');";
-                mysqli_query($conn, $query);
+                echo "Password is <strong>{$gamename}</strong>. ";
+                // echo "The instructor can join the game via login <strong>{$gamename}_admin</strong>.";
+                // $query = "insert into players (login, password) values ('{$gamename}_admin', '{$gamename}');";
+                // mysqli_query($conn, $query);
+
+                // надо добавить таблицу со всеми играми, откуда будет загружаться игра и куда она будет сохраняться
             }
         ?>
+        
     </div>
 </body>
 </html>

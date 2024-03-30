@@ -4,10 +4,10 @@
     class Game {
 
         private $conn;
-        private $cur_round;
+        public $cur_round;
         private $login;
         private $gamename;
-        public $num_players = 5;
+        public $num_players = 2;
         public $max_price = 50;
         private $costs = 20;
 
@@ -25,7 +25,8 @@
         }
 
         function get_round_results() {
-            $query = "select login, yield, pr from moves where game = '{$this->gamename}' and round = {$this->cur_round}";
+            $round = $this->cur_round - 1;
+            $query = "select login, yield, pr from moves where game = '{$this->gamename}' and round = {$round}";
             $res = mysqli_query($this->conn, $query)->fetch_all(MYSQLI_ASSOC);
             $list = [];
             $y = 0;
@@ -47,7 +48,7 @@
                             ];
                 $query = "insert into rounds (game, login, round, profit) 
                             values ('{$this->gamename}', '{$this->login}', {$this->cur_round}, {$res[$key]["profit"]})";
-                // mysqli_query($this->conn, $query);
+                mysqli_query($this->conn, $query);
                 // foreach ($res[$key] as $k => $val) {
                 //     echo "{$k} => {$val} <br>";
                 // }
@@ -55,33 +56,25 @@
             return $res;
         }
 
+        function check() {
+            $query = "select count(*) from moves where game = '{$this->gamename}' and round = {$this->cur_round}";
+            $res = mysqli_query($this->conn, $query)->fetch_all()[0][0];
+            if ($res == $this->num_players) {
+                return True;
+            }
+            return False;
+        }
+
+        function new_round() {
+            $this->cur_round += 1;
+        }
+
+        function save_game() {
+            
+        }
+
         function get_final_results() {
 
         }
     }
-
-    // function save_choice($conn, $gamename, $username, $round, $y, $r) {
-    //     $query = "insert into moves (game, login, round, yield, pr) 
-    //             values ('{$gamename}', '{$username}', {$round}, {$y}, {$r})";
-    //     mysqli_query($conn, $query);
-    // }
-
-    // function get_round_results($conn, $gamename, $round) {
-    //     $query = "select login, yield, pr from moves where game = '{$gamename}' and round = {$round}";
-    //     $res = mysqli_query($conn, $query)->fetch_all(MYSQLI_ASSOC);
-    //     $list = [];
-    //     $y = 0;
-    //     foreach ($res as $row) {
-    //         $list[substr($row["login"], -1, 1)] = ["yield" => $row["yield"], "pr" => $row["pr"]];
-    //         $y += $row["yield"];
-    //     }
-    //     $p = 100 - $y;
-    //     echo "y = {$y}, p = {$p} <br>";
-    //     foreach ($list as $key => $value) {
-    //         echo $key;
-    //         echo "<br>";
-    //         foreach ($value as $k => $val) {
-    //             echo "{$k} => {$val} <br>";
-    //         }
-    //     }
-    // }
+    

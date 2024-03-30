@@ -10,4 +10,10 @@
     $game = new Game();
     $game->load_game($conn, $login, $gamename, $round);
     $game->save_choice($y, $pr);
+    $flag = False;
+    while (!$flag) {
+        $flag = $game->check();
+    }
+    $game->new_round();
+    $game->save_game();
     echo "Your choice was saved successfully!!!!!!!!!!";
