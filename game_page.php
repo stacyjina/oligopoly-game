@@ -4,9 +4,8 @@
     include("game.php");
     $login = $_SESSION["login"];
     $gamename = $_SESSION["gamename"];
-    $round = $_SESSION["round"];
     $game = new Game();
-    $game->load_game($conn, $login, $gamename, $round);
+    $game->load_game($conn, $login, $gamename);
     if (isset($_POST["start"])) {
         $_SESSION["start"] = True;
     }
@@ -35,7 +34,7 @@
             echo "$$ p = {$price} - \\Sigma_{i = 1}^n y_i $$";
             echo "Your firm's profit function:";
             echo "$$ \\pi = (p + 0.02 r \\cdot p) \\cdot y - 20y - 100r $$";
-            if ($round != 1) {
+            if ($game->cur_round != 1) {
                 $table_html = "<table>";
                 $table_html .= "<colgroup> 
                                     <col span='4'> 

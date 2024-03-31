@@ -15,14 +15,12 @@ $("#move").on("click", function() {
             $("#yield").prop("disabled", true);
             $("#pr").prop("disabled", true);
         },
-        success: function(data) {
+        success: function() {
             $("#move").prop("disabled", false);
             $("#yield").prop("disabled", false);
             $("#pr").prop("disabled", false);
-            alert(data);
+            location.reload();
         }
     })
-
-    location.reload();
 
 });

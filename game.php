@@ -11,11 +11,14 @@
         public $max_price = 50;
         private $costs = 20;
 
-        function load_game($conn, $login, $gamename, $round) {
+        function load_game($conn, $login, $gamename) {
             $this->conn = $conn;
             $this->login = $login;
             $this->gamename = $gamename;
-            $this->cur_round = $round;
+            $query = "select cur_round, num_players from games where gamename = '{$gamename}'";
+            $res = mysqli_query($this->conn, $query)->fetch_all(MYSQLI_ASSOC)[0];
+            $this->cur_round = $res["cur_round"];
+            $this->num_players = $res["num_players"];
         }
 
         function save_choice($y, $r) {
@@ -38,8 +41,6 @@
             echo "y = {$y}, p = {$p} <br>";
             $res = [];
             foreach ($list as $key => $value) {
-                // echo $key;
-                // echo "<br>";
                 $res[$key] = ["y" => $value["yield"], 
                                 "r" => $value["pr"], 
                                 "p" => $p * (1 + 0.002 * $value["pr"]),
@@ -49,9 +50,6 @@
                 $query = "insert into rounds (game, login, round, profit) 
                             values ('{$this->gamename}', '{$this->login}', {$this->cur_round}, {$res[$key]["profit"]})";
                 mysqli_query($this->conn, $query);
-                // foreach ($res[$key] as $k => $val) {
-                //     echo "{$k} => {$val} <br>";
-                // }
             }
             return $res;
         }
@@ -70,11 +68,11 @@
         }
 
         function save_game() {
-            
+            $query = "update games set cur_round = {$this->cur_round} where gamename = '{$this->gamename}'";
+            mysqli_query($this->conn, $query);
         }
 
         function get_final_results() {
 
         }
     }
-    

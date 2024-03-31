@@ -77,7 +77,8 @@
                 // $query = "insert into players (login, password) values ('{$gamename}_admin', '{$gamename}');";
                 // mysqli_query($conn, $query);
 
-                // надо добавить таблицу со всеми играми, откуда будет загружаться игра и куда она будет сохраняться
+                $query = "insert into games (gamename, cur_round, num_players) values ('{$gamename}', 1, {$_POST["players_number"]})";
+                mysqli_query($conn, $query);
             }
         ?>
         
