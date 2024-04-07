@@ -43,9 +43,9 @@
             foreach ($list as $key => $value) {
                 $res[$key] = ["y" => $value["yield"], 
                                 "r" => $value["pr"], 
-                                "p" => $p * (1 + 0.002 * $value["pr"]),
-                                "profit" => $p * (1 + 0.002 * $value["pr"]) * $value["yield"] - 
-                                                $this->costs * $value["yield"] - $value["pr"]
+                                "p" => $p,
+                                "profit" => $p * $value["yield"] - $this->costs * $value["yield"] 
+                                            - 0.5 * $value["pr"] * $value["pr"] + $value["pr"] * sqrt($value["yield"])
                             ];
                 $query = "insert into rounds (game, login, round, profit) 
                             values ('{$this->gamename}', '{$this->login}', {$this->cur_round}, {$res[$key]["profit"]})";

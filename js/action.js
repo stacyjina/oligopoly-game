@@ -24,3 +24,22 @@ $("#move").on("click", function() {
     })
 
 });
+
+$("#move_help").on("click", function() {
+    var y = $("#agg_yield").val();
+    $.ajax({
+        url: 'ajax/helper.php',
+        type: 'post',
+        cache: false,
+        data: { 'yield' : y },
+        dataType: 'html',
+        beforeSend: function() {
+        },
+        success: function(data) {
+            var res = data.split(" ").map((e) => parseInt(e));
+            var y = res[0];
+            var x = res[1];
+            $("#helper").text("We recommend you to go for y = " + y + " and r = " + x + ".");
+        }
+    })
+});

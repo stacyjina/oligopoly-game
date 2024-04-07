@@ -31,9 +31,9 @@
             echo "Round {$game->cur_round}";
             echo "Demand function of an aggregated consumer:";
             $price = $game->max_price * $game->num_players;
-            echo "$$ p = {$price} - \\Sigma_{i = 1}^n y_i $$";
+            echo "$$ p = {$price} - \\Sigma_{i = 1}^{$game->num_players} y_i $$";
             echo "Your firm's profit function:";
-            echo "$$ \\pi = (p + 0.02 r \\cdot p) \\cdot y - 20y - 100r $$";
+            echo "$$ \\pi = p \\cdot y - 20y - 0.5r^2 + r \\sqrt{y}$$";
             if ($game->cur_round != 1) {
                 $table_html = "<table>";
                 $table_html .= "<colgroup> 
@@ -52,8 +52,8 @@
                 $table_html .= "</table>";
                 echo $table_html;
             }
-            echo "<div id='choice'></div>";
-            $sliders = "<form class='sliders' >";
+            echo "<div id='choice'>";
+            $sliders = "<form class='sliders'></div>";
             // method='post' action='game_page.php'
             $sliders .= "<div class='sliders'> 
                             <input type='range' min='0' max='{$game->max_price}' value='0' name='yield' id='yield'
@@ -66,7 +66,16 @@
             $sliders .= "<button type='submit' name='move' id='move'> Save choice </button>";
             $sliders .= "</form>";
             echo $sliders;
-            
+
+            $max_y = ($game->num_players - 1) * $game->max_price;
+            $helper = "<div id='helper'></div>";
+            $helper .= "<form class='helper'>
+                            <input type='range' min='0' max='{$max_y}' value='0' name='agg_yield' id='agg_yield'
+                                oninput='this.nextElementSibling.value = this.value'>
+                            <output>0</output>";
+            $helper .= "<br><button type='button' name='move_help' id='move_help'> See recommendations </button>";
+            $helper .= "</form>";
+            echo $helper;    
 
         } else {
             echo "Game rules: ................... <br> Press a button below if you are ready to start.<br>";
