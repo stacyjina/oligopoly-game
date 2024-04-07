@@ -27,7 +27,7 @@
 
     <?php
         // if (isset($_POST["start"]) or isset($_POST["move"])) {
-        if (isset($_SESSION["start"])) {
+        if (isset($_SESSION["start"]) and $game->cur_round <= $game->last_round) {
             echo "Round {$game->cur_round}";
             echo "Demand function of an aggregated consumer:";
             $price = $game->max_price * $game->num_players;
@@ -77,11 +77,27 @@
             $helper .= "</form>";
             echo $helper;    
 
-        } else {
+        } else if ($game->cur_round <= $game->last_round) {
             echo "Game rules: ................... <br> Press a button below if you are ready to start.<br>";
             echo '<form class="start" method="POST" action="game_page.php"> 
                 <button type="submit" name="start"> Start a game </button>
                 </form>';
+        } else {
+            $res = $game->get_final_results();
+            $table_html = "<h2> Final Results </h2><table>";
+            $table_html .= "<colgroup> 
+                                <col span='4'> 
+                                <col style='border: 2px solid black'> 
+                            </colgroup>";
+            $table_html .= "<tr>";
+            $table_html .= "<th> Player </th> <th> Profit </th>";
+            $table_html .= "</tr>";
+            foreach ($res as $id => $profit) {
+                $table_html .= "<tr> <td> Player {$id} </td>";
+                $table_html .= "<td> {$profit} </td>";
+            }
+            $table_html .= "</table>";
+            echo $table_html;
         }
     ?>
 

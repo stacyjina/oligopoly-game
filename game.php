@@ -10,6 +10,7 @@
         public $num_players = 2;
         public $max_price = 50;
         private $costs = 20;
+        public $last_round = 5;
 
         function load_game($conn, $login, $gamename) {
             $this->conn = $conn;
@@ -44,8 +45,8 @@
                 $res[$key] = ["y" => $value["yield"], 
                                 "r" => $value["pr"], 
                                 "p" => $p,
-                                "profit" => $p * $value["yield"] - $this->costs * $value["yield"] 
-                                            - 0.5 * $value["pr"] * $value["pr"] + $value["pr"] * sqrt($value["yield"])
+                                "profit" => round($p * $value["yield"] - $this->costs * $value["yield"] 
+                                            - 0.5 * $value["pr"] * $value["pr"] + $value["pr"] * sqrt($value["yield"]), 2)
                             ];
                 $query = "insert into rounds (game, login, round, profit) 
                             values ('{$this->gamename}', '{$this->login}', {$this->cur_round}, {$res[$key]["profit"]})";
@@ -73,6 +74,12 @@
         }
 
         function get_final_results() {
-
+            $query = "select login, sum(profit) as profit from rounds group by 1 order by login asc";
+            $res = mysqli_query($this->conn, $query)->fetch_all(MYSQLI_ASSOC);
+            $list = [];
+            foreach ($res as $row) {
+                $list[substr($row["login"], -1, 1)] = $row["profit"];
+            }
+            return $list;
         }
     }

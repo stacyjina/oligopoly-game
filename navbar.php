@@ -20,7 +20,7 @@
                     ?>
                 </li>
                 <li class="nav link"> 
-                    <a href="#">About</a>
+                    <a href="./about.php">About</a>
                 </li>
             </ul>
         </div>
