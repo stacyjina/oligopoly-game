@@ -36,24 +36,24 @@
 
     <!-- <button class="new-game" type="menu">New game</button> -->
 
-    <div class="dropdown-form">
-        <form class="px-4 py-3" action="index.php" method="post">
+    <div class="form">
+        <form class="create" action="index.php" method="post">
             <div class="mb-3">
-                <label for="exampleDropdownFormEmail1" class="form-label">Name of the game</label>
+                <label class="create">Name of the game</label>
                 <br>
-                <input type="text" placeholder="my game" name="gamename">
+                <input class="create" type="text" placeholder="my game" name="gamename">
             </div>
             <div class="mb-3">
-                <label class="label" for="players_number">Players</label>
+                <label class="create" for="players_number">Players</label>
                 <br>
-                <select name="players_number">
+                <select class="create" name="players_number">
                     <option value="3" style="text-align: center;">3</option>
                     <option value="4" style="text-align: center;">4</option>	
                     <option value="5" selected="selected" style="text-align: center;">5</option>	
                     <option value="6" style="text-align: center;">6</option>				
                 </select>            
             </div>
-            <button type="submit" class="btn btn-primary" name="submit">Create a game</button>
+            <button type="submit" class="create" name="submit">Create a game</button>
         </form>
     </div>
 

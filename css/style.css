@@ -80,6 +80,7 @@ li.link:hover {
 
 div {
     display: block;
+    margin: auto;
 }
 
 body {
@@ -90,3 +91,12 @@ body {
     color: #242424;
     background-color: #FBF9F1;
 }
+
+form.create {
+    margin: auto;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
+    text-align: center;
+}
+
