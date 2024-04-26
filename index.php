@@ -1,6 +1,25 @@
 <?php 
     require_once("db.php");
     session_start();
+    if (isset($_POST["submit2"])) {
+        if (!empty($_POST["username"]) && !empty($_POST["password"])) {
+            $login = $_POST["username"];
+            $password = $_POST["password"];
+            $query = "select count(*) from players where login = '{$login}' and password = '{$password}';";
+            $res = mysqli_query($conn, $query)->fetch_all()[0][0];
+            if ($res != 0) {
+                $_SESSION["login"] = $login;
+                $_SESSION["gamename"] = $password;
+                $_SESSION["round"] = 1;
+                header("Location: game_page.php");
+            }
+            else {
+                echo "<li> <div> Incorrect login/password. </div> </li>";
+            }
+        } else {
+            echo "<li> <div> Please enter both login and password. </div> </li>";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
