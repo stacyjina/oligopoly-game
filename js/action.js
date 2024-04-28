@@ -43,3 +43,11 @@ $("#move_help").on("click", function() {
         }
     })
 });
+
+$("#login").on("click", function() {
+    var x = document.querySelector("#login-form");
+    var flag = x.classList.replace("closed", "open");
+    if (!flag) {
+        x.classList.replace("open", "closed");
+    }
+});

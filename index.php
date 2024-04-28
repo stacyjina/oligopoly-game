@@ -14,14 +14,13 @@
                 header("Location: game_page.php");
             }
             else {
-                echo "<li> <div> Incorrect login/password. </div> </li>";
+                echo "<div class='error'> Incorrect login/password. </div>";
             }
         } else {
-            echo "<li> <div> Please enter both login and password. </div> </li>";
+            echo "<div class='error'> Please enter both login and password. </div>";
         }
     }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +54,7 @@
 
     <!-- <button class="new-game" type="menu">New game</button> -->
 
-    <div class="form">
+    <div class="form homepage">
         <form class="create" action="index.php" method="post">
             <div class="mb-3">
                 <label class="create">Name of the game</label>
@@ -76,7 +75,7 @@
         </form>
     </div>
 
-    <div class="logins">
+    <div class="logins homepage">
         <?php
             if (isset($_POST["submit"])) {
                 $gamename = $_POST["gamename"];
@@ -96,11 +95,17 @@
                 // $query = "insert into players (login, password) values ('{$gamename}_admin', '{$gamename}');";
                 // mysqli_query($conn, $query);
 
-                $query = "insert into games (gamename, cur_round, num_players) values ('{$gamename}', 1, {$_POST["players_number"]})";
+                $query = "insert into games (gamename, cur_round, num_players) values ('{$gamename}', 1, 2)";
+                // {$_POST["players_number"]}
                 mysqli_query($conn, $query);
             }
         ?>
-        
     </div>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/action.js"></script>
+
 </body>
 </html>
