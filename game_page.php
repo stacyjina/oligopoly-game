@@ -38,7 +38,7 @@
     <?php
         // Check if the game is in progress
         if (isset($_SESSION["start"]) and $game->cur_round <= $game->last_round) {
-            echo "Round {$game->cur_round}<br>";
+            echo "<div class='main'><h2> Round {$game->cur_round} </h2>";
             echo "Demand function of an aggregated consumer:";
             $price = $game->max_price * $game->num_players;
             echo "$$ p = {$price} - \\Sigma_{i = 1}^{$game->num_players} y_i $$";
@@ -69,39 +69,57 @@
             echo "<div id='choice'>";
             $sliders = "<form class='sliders'></div>";
             $sliders .= "<div class='sliders'> 
+                            Yeild (y)
+                            <br>
                             <input type='range' min='0' max='{$game->max_price}' value='0' name='yield' id='yield'
                                 oninput='this.nextElementSibling.value = this.value'>
                             <output>0</output>
+                        </div>
+                        <div class='sliders'> 
+                            Marketing (r)
+                            <br>
                             <input type='range' min='0' max='{$game->max_price}' value='0' name='pr' id='pr'
                                 oninput='this.nextElementSibling.value = this.value'>
                             <output>0</output>
-                        </div>";
+                        </div> <br>";
             $sliders .= "<button type='submit' name='move' id='move'> Save choice </button>";
             $sliders .= "</form>";
             echo $sliders;
 
             // Helper that gives recommendations 
             $max_y = ($game->num_players - 1) * $game->max_price;
-            $helper = "<div id='helper'></div>";
+            $helper = "<p> If you are not sure what choice to make, fell free to use this recommedation system. <br>
+                        Use the slider below to enter expected aggregated yield of other players. </p>";
+            $helper .= "<div id='helper'></div>";
             $helper .= "<form class='helper'>
+                            Total yield of other players
+                            <br>
                             <input type='range' min='0' max='{$max_y}' value='0' name='agg_yield' id='agg_yield'
                                 oninput='this.nextElementSibling.value = this.value'>
                             <output>0</output>";
             $helper .= "<br><button type='button' name='move_help' id='move_help'> See recommendations </button>";
             $helper .= "</form>";
             echo $helper;
+            echo "</div>";
         } else if ($game->cur_round <= $game->last_round) { 
-            // If the game hasn't started yet
-            echo "Game rules: ................... <br> Press a button below if you are ready to start.<br>";
+            // If the game hasn't started yet, show rules
+            echo "<div class='main'><h2>Game rules</h2>";
+            $rules = "<p>Imagine that you and other players are firms selling the same good to an aggregated consumer. <br>
+                There will be 5 rounds. In each round you are supposed to choose how many pieces of good your firm will be producing (y)
+                and how much money you will be spending on marketing (r). Your goal is to maximise firm's profit. 
+                After each round you will be able to see choices and profits of other players. Also, if you struggling to make your choice, 
+                there will be an interface that can give some useful recommendations. </p> 
+                <h3> Press a button below if you are ready to start. </h3> </div>";
+            echo $rules;
             echo '<form class="start" method="POST" action="game_page.php"> 
                 <button type="submit" name="start"> Start a game </button>
                 </form>';
         } else {
             // If the game is over, showing final result of the game
             $res = $game->get_final_results();
-            $table_html = "<h2> Final Results </h2><table>";
+            $table_html = "<h2> Final Results </h2> <div class='main'> 
+                            <h3> Congratulations! </h3> <table>";
             $table_html .= "<colgroup> 
-                                <col span='4'> 
                                 <col style='border: 2px solid black'> 
                             </colgroup>";
             $table_html .= "<tr>";
@@ -111,7 +129,7 @@
                 $table_html .= "<tr> <td> Player {$id} </td>";
                 $table_html .= "<td> {$profit} </td>";
             }
-            $table_html .= "</table>";
+            $table_html .= "</table> </div>";
             echo $table_html;
         }
     ?>

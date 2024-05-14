@@ -47,19 +47,20 @@
 
     <h1 class="title">The Oligopoly Game</h1>
 
-    <div class="description">
+    <div class="description main">
         <p>This is a multiplayer economic game that will teach you the way oligopolies work and 
-            will get you acquainted with the prisoner's dilemma.</p>
+            <br>will get you acquainted with the prisoner's dilemma.</p>
     </div>
 
-    <div class="new-or-existing">
+    <div class="new-or-existing main">
         <p>If you are an instructor press the button below to create a new game. 
-            If you want to enter an existing game -- log in via the top bar.</p>
+            <br>If you want to enter an existing game -- log in via the top bar.</p>
     </div>
 
     <!-- Form to create a new game -->
 
     <div class="form homepage">
+        <h3> Create a new game </h3>
         <form class="create" action="index.php" method="post">
             <div class="mb-3">
                 <label class="create">Name of the game</label>
@@ -70,7 +71,7 @@
                 <label class="create" for="players_number">Players</label>
                 <br>
                 <select class="create" name="players_number">
-                    <option value="2" style="text-align: center;">3</option>
+                    <option value="2" style="text-align: center;">2</option>
                     <option value="3" style="text-align: center;">3</option>
                     <option value="4" selected="selected" style="text-align: center;">4</option>	
                     <option value="5" style="text-align: center;">5</option>	
@@ -92,14 +93,14 @@
                 $query = "select count(*) from gamenames where name = '{$gamename}'";
                 $res = mysqli_query($conn, $query)->fetch_all()[0][0];
                 $gamename .= "{$res}";
-                echo"These are your logins for entering the game: <br>";
+                echo"<p>These are your logins for entering the game: <br>";
                 for ($i = 1; $i <= $_POST["players_number"]; $i++) {
                     echo "login{$i}: {$gamename}_{$i} <br>";
                     $query = "insert into players (login, password) values ('{$gamename}_{$i}', '{$gamename}');";
                     mysqli_query($conn, $query);
                 }
-                echo "Password is <strong>{$gamename}</strong>. ";
-                $query = "insert into games (gamename, cur_round, num_players) values ('{$gamename}', 1, 2)";
+                echo "Password is <strong>{$gamename}</strong>. </p>";
+                $query = "insert into games (gamename, cur_round, num_players) values ('{$gamename}', 1, {$_POST["players_number"]})";
                 mysqli_query($conn, $query);
             }
         ?>

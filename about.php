@@ -33,10 +33,10 @@
 
     <h2> About this project </h2>
 
-    <div class='about'> 
+    <div class='about main'> 
         <p> 
             This is a course project aimed at creating a web-app with an economic game using both front- and back-end technologies. 
-            Source code can be found <a href='https://github.com/stacyjina/oligopoly-game'> here</a>.
+            <br> Source code can be found <a href='https://github.com/stacyjina/oligopoly-game'> here</a>.
         </p>
     </div>
     

@@ -45,6 +45,7 @@ a.brand {
         font-size: 16pt;
         font-weight: bold;
     }
+    text-decoration: none;
 }
 
 .form-group, .form-group input, .form input {
@@ -62,7 +63,6 @@ li.link {
     display: inline-block;
     padding: 17px 15px;
     height: fit-content;
-    /* float: left; */
     line-height: 26px;
 }
 
@@ -85,11 +85,8 @@ body {
     background-color: #FBF9F1;
 }
 
-form.create {
+form.create, form.start {
     margin: auto;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, 0);
     text-align: center;
 }
 
@@ -111,11 +108,20 @@ div.error {
     color: red;
 }
 
-h1, h2 {
+h1, h2, h3 {
     text-align: center;
 }
 
 div.logins {
     display: inline;
     text-align: center;
+}
+
+div.main {
+    text-align: center;
+    margin: auto 200px;
+}
+
+div.sliders {
+    display: inline-block;
 }
