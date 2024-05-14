@@ -3,16 +3,17 @@
 
     class Game {
 
-        private $conn;
-        public $cur_round;
-        private $login;
-        private $gamename;
-        public $num_players = 2;
+        private $conn; // DB connection
+        public $cur_round; // number of current round
+        private $login; // login of a player
+        private $gamename; // name of the game
+        public $num_players = 2; // number of players in a game
         public $max_price = 50;
-        private $costs = 20;
-        public $last_round = 5;
+        private $costs = 20; // marginal costs of a firm
+        public $last_round = 5; // number of rounds in a game
 
         function load_game($conn, $login, $gamename) {
+            // Loads a game from database
             $this->conn = $conn;
             $this->login = $login;
             $this->gamename = $gamename;
@@ -23,14 +24,16 @@
         }
 
         function save_choice($y, $r) {
+            // Saves player's choice to database
             $query = "insert into moves (game, login, round, yield, pr) 
                     values ('{$this->gamename}', '{$this->login}', {$this->cur_round}, {$y}, {$r})";
             mysqli_query($this->conn, $query);
         }
 
         function get_round_results() {
+            // Loads results of the last played round
             $round = $this->cur_round - 1;
-            $query = "select login, yield, pr from moves where game = '{$this->gamename}' and round = {$round}";
+            $query = "select login, yield, pr from moves where game = '{$this->gamename}' and round = {$round} order by login asc";
             $res = mysqli_query($this->conn, $query)->fetch_all(MYSQLI_ASSOC);
             $list = [];
             $y = 0;
@@ -56,6 +59,7 @@
         }
 
         function check() {
+            // Check whether all players made their choices
             $query = "select count(*) from moves where game = '{$this->gamename}' and round = {$this->cur_round}";
             $res = mysqli_query($this->conn, $query)->fetch_all()[0][0];
             if ($res == $this->num_players) {
@@ -65,20 +69,23 @@
         }
 
         function new_round() {
+            // Starts new round
             $this->cur_round += 1;
         }
 
         function save_game() {
+            // Saves game to database
             $query = "update games set cur_round = {$this->cur_round} where gamename = '{$this->gamename}'";
             mysqli_query($this->conn, $query);
         }
 
         function get_final_results() {
+            // Loads final result of the game
             $query = "select login, sum(profit) as profit from rounds group by 1 order by login asc";
             $res = mysqli_query($this->conn, $query)->fetch_all(MYSQLI_ASSOC);
             $list = [];
             foreach ($res as $row) {
-                $list[substr($row["login"], -1, 1)] = $row["profit"];
+                $list[substr($row["login"], -1, 1)] = round($row["profit"], 2);
             }
             return $list;
         }

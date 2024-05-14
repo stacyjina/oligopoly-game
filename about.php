@@ -1,7 +1,13 @@
 <?php 
+    // Database connection file
     require_once("db.php");
+
+    // Starting a session to keep track of users
     session_start();
+
+    // Game class file
     include("game.php");
+
     if (isset($_SESSION["login"])) {
         $login = $_SESSION["login"];
         $gamename = $_SESSION["gamename"];
@@ -18,6 +24,9 @@
     <link rel='stylesheet' type='text/css' media='screen' href='css/style.css'>
 </head>
 <body>
+
+    <!-- Navigation bar -->
+
     <?php 
         include("navbar.php");
     ?>

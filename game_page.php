@@ -1,9 +1,16 @@
 <?php 
+    // Database connection file
     require_once("db.php");
+
+    // Starting a session to keep track of users
     session_start();
+
+    // Game class file
     include("game.php");
     $login = $_SESSION["login"];
     $gamename = $_SESSION["gamename"];
+
+    // Creating a game and loading it from database
     $game = new Game();
     $game->load_game($conn, $login, $gamename);
     if (isset($_POST["start"])) {
@@ -21,19 +28,24 @@
     <link rel='stylesheet' type='text/css' media='screen' href='css/style.css'>
 </head>
 <body>
+
+    <!-- Navigation bar -->
+
     <?php 
         include("navbar.php");
     ?>
 
     <?php
-        // if (isset($_POST["start"]) or isset($_POST["move"])) {
+        // Check if the game is in progress
         if (isset($_SESSION["start"]) and $game->cur_round <= $game->last_round) {
-            echo "Round {$game->cur_round}";
+            echo "Round {$game->cur_round}<br>";
             echo "Demand function of an aggregated consumer:";
             $price = $game->max_price * $game->num_players;
             echo "$$ p = {$price} - \\Sigma_{i = 1}^{$game->num_players} y_i $$";
             echo "Your firm's profit function:";
             echo "$$ \\pi = p \\cdot y - 20y - 0.5r^2 + r \\sqrt{y}$$";
+
+            // If it is not the 1st round, show last rounds' results
             if ($game->cur_round != 1) {
                 $table_html = "<table>";
                 $table_html .= "<colgroup> 
@@ -52,9 +64,10 @@
                 $table_html .= "</table>";
                 echo $table_html;
             }
+
+            // Main sliders of the game
             echo "<div id='choice'>";
             $sliders = "<form class='sliders'></div>";
-            // method='post' action='game_page.php'
             $sliders .= "<div class='sliders'> 
                             <input type='range' min='0' max='{$game->max_price}' value='0' name='yield' id='yield'
                                 oninput='this.nextElementSibling.value = this.value'>
@@ -67,6 +80,7 @@
             $sliders .= "</form>";
             echo $sliders;
 
+            // Helper that gives recommendations 
             $max_y = ($game->num_players - 1) * $game->max_price;
             $helper = "<div id='helper'></div>";
             $helper .= "<form class='helper'>
@@ -75,14 +89,15 @@
                             <output>0</output>";
             $helper .= "<br><button type='button' name='move_help' id='move_help'> See recommendations </button>";
             $helper .= "</form>";
-            echo $helper;    
-
-        } else if ($game->cur_round <= $game->last_round) {
+            echo $helper;
+        } else if ($game->cur_round <= $game->last_round) { 
+            // If the game hasn't started yet
             echo "Game rules: ................... <br> Press a button below if you are ready to start.<br>";
             echo '<form class="start" method="POST" action="game_page.php"> 
                 <button type="submit" name="start"> Start a game </button>
                 </form>';
         } else {
+            // If the game is over, showing final result of the game
             $res = $game->get_final_results();
             $table_html = "<h2> Final Results </h2><table>";
             $table_html .= "<colgroup> 
@@ -100,6 +115,8 @@
             echo $table_html;
         }
     ?>
+
+    <!-- Scripts for jquery, ajax -->
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

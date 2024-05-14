@@ -1,8 +1,9 @@
+// Script that saves a player's choice and waits for other players
 $("#move").on("click", function() {
     var y = $("#yield").val();
     var pr = $("#pr").val();
 
-    $("#choice").text("Your choice: y = " + y + " pr = " + pr + ". Please wait until other players make their choice.");
+    $("#choice").text("Your choice: y = " + y + " r = " + pr + ". Please wait until other players make their choice.");
 
     $.ajax({
         url: 'ajax/savechoice.php',
@@ -25,6 +26,7 @@ $("#move").on("click", function() {
 
 });
 
+// Script that gives recommedations
 $("#move_help").on("click", function() {
     var y = $("#agg_yield").val();
     $.ajax({
@@ -44,6 +46,7 @@ $("#move_help").on("click", function() {
     })
 });
 
+// Script that opens and hides login form on click
 $("#login").on("click", function() {
     var x = document.querySelector("#login-form");
     var flag = x.classList.replace("closed", "open");

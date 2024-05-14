@@ -1,10 +1,15 @@
 <div class="navbar">
         <div class="nav container"> 
+
+            <!-- Name of the game -->
+
             <div class="brand"> 
                 <a class="brand" href="./index.php"> 
                     <span class="brandname">The Oligopoly Game</span> 
                 </a>
             </div>
+
+            <!-- Navigation buttons -->
 
             <ul class="nav buttons"> 
                 <li class="nav link"> 
@@ -19,6 +24,9 @@
                         }
                     ?>
                 </li>
+
+                <!-- Login form -->
+                
                 <ul class="dropdown-menu closed" role="menu" id="login-form">
                     <div id="fast-login-form-area">
                         <form id="loginFormItem" name="f" action="index.php" method="POST" class="dropdown-menus ng-pristine ng-valid">

@@ -1,6 +1,11 @@
 <?php 
+    // Database connection file
     require_once("db.php");
+
+    // Starting a session to keep track of users
     session_start();
+
+    // Check for invalid login info
     if (isset($_POST["submit2"])) {
         if (!empty($_POST["username"]) && !empty($_POST["password"])) {
             $login = $_POST["username"];
@@ -38,7 +43,7 @@
         include("navbar.php");
     ?>
 
-    <!-- Title -->
+    <!-- Title and description -->
 
     <h1 class="title">The Oligopoly Game</h1>
 
@@ -52,7 +57,7 @@
             If you want to enter an existing game -- log in via the top bar.</p>
     </div>
 
-    <!-- <button class="new-game" type="menu">New game</button> -->
+    <!-- Form to create a new game -->
 
     <div class="form homepage">
         <form class="create" action="index.php" method="post">
@@ -65,15 +70,18 @@
                 <label class="create" for="players_number">Players</label>
                 <br>
                 <select class="create" name="players_number">
+                    <option value="2" style="text-align: center;">3</option>
                     <option value="3" style="text-align: center;">3</option>
-                    <option value="4" style="text-align: center;">4</option>	
-                    <option value="5" selected="selected" style="text-align: center;">5</option>	
+                    <option value="4" selected="selected" style="text-align: center;">4</option>	
+                    <option value="5" style="text-align: center;">5</option>	
                     <option value="6" style="text-align: center;">6</option>				
                 </select>            
             </div>
             <button type="submit" class="create" name="submit">Create a game</button>
         </form>
     </div>
+
+    <!-- Container with logins and password for a newly created game -->
 
     <div class="logins homepage">
         <?php
@@ -91,16 +99,13 @@
                     mysqli_query($conn, $query);
                 }
                 echo "Password is <strong>{$gamename}</strong>. ";
-                // echo "The instructor can join the game via login <strong>{$gamename}_admin</strong>.";
-                // $query = "insert into players (login, password) values ('{$gamename}_admin', '{$gamename}');";
-                // mysqli_query($conn, $query);
-
                 $query = "insert into games (gamename, cur_round, num_players) values ('{$gamename}', 1, 2)";
-                // {$_POST["players_number"]}
                 mysqli_query($conn, $query);
             }
         ?>
     </div>
+
+    <!-- Scripts for jquery, ajax -->
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
