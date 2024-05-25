@@ -17,8 +17,8 @@
 
     // Calculate the best solution for given y
     $n = $game->num_players;
-    $y = intval(25 * $n - $s/2 - 15/4);
-    $r = intval(5/2 * sqrt(100 * $n - 2 * $s - 15));
+    $y = intval((50 * $n - $s - 9)/3);
+    $r = intval(sqrt((50 * $n - $s - 9)/3)/0.3);
     $y = min($y, $game->max_price);
     $r = min($r, 100);
     echo strval($y) . " " . strval($r);

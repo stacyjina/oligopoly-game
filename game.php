@@ -48,8 +48,8 @@
                 $res[$key] = ["y" => $value["yield"], 
                                 "r" => $value["pr"], 
                                 "p" => $p,
-                                "profit" => round($p * $value["yield"] - $this->costs * $value["yield"] 
-                                            - 0.5 * $value["pr"] * $value["pr"] + $value["pr"] * sqrt($value["yield"]), 2)
+                                "profit" => round($p * $value["yield"] - 10 * $value["yield"] - 0.5 * $value["yield"] * $value["yield"]
+                                                - 0.15 * $value["pr"] * $value["pr"] + $value["pr"] * sqrt($value["yield"]), 2)
                             ];
                 if ($key == substr($this->login, -1, 1)) {
                     $query = "insert into rounds (game, login, round, profit) 

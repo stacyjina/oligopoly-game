@@ -43,7 +43,7 @@
             $price = $game->max_price * $game->num_players;
             echo "$$ p = {$price} - \\Sigma_{i = 1}^{$game->num_players} y_i $$";
             echo "Your firm's profit function:";
-            echo "$$ \\pi = p \\cdot y - 20y - 0.5r^2 + r \\sqrt{y}$$";
+            echo "$$ \\pi = p \\cdot y - 0.5y^2 - 10y - 0.15r^2 + r \\sqrt{y}$$";
 
             // If it is not the 1st round, show last rounds' results
             if ($game->cur_round != 1) {
