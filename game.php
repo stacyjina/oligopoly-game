@@ -51,9 +51,11 @@
                                 "profit" => round($p * $value["yield"] - $this->costs * $value["yield"] 
                                             - 0.5 * $value["pr"] * $value["pr"] + $value["pr"] * sqrt($value["yield"]), 2)
                             ];
-                $query = "insert into rounds (game, login, round, profit) 
+                if ($key == substr($this->login, -1, 1)) {
+                    $query = "insert into rounds (game, login, round, profit) 
                             values ('{$this->gamename}', '{$this->login}', {$this->cur_round}, {$res[$key]["profit"]})";
-                mysqli_query($this->conn, $query);
+                    mysqli_query($this->conn, $query);
+                }
             }
             return $res;
         }
@@ -81,7 +83,7 @@
 
         function get_final_results() {
             // Loads final result of the game
-            $query = "select login, sum(profit) as profit from rounds group by 1 order by login asc";
+            $query = "select login, sum(profit) as profit from rounds where game = '{$this->gamename}' group by 1 order by login asc";
             $res = mysqli_query($this->conn, $query)->fetch_all(MYSQLI_ASSOC);
             $list = [];
             foreach ($res as $row) {
