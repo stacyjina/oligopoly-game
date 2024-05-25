@@ -78,7 +78,7 @@ div {
 
 body {
     margin: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Century Gothic;
     font-size: 17px;
     line-height: 26px;
     color: #242424;
@@ -124,4 +124,14 @@ div.main {
 
 div.sliders {
     display: inline-block;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
 }
