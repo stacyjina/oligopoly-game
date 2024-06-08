@@ -16,11 +16,16 @@ $("#move").on("click", function() {
             $("#yield").prop("disabled", true);
             $("#pr").prop("disabled", true);
         },
-        success: function() {
-            $("#move").prop("disabled", false);
-            $("#yield").prop("disabled", false);
-            $("#pr").prop("disabled", false);
-            location.reload();
+        success: function(data) {
+            if (data == "timeout") {
+                location.replace('logout.php');
+                alert("Timeout: other players didn't make their moves :(");
+            } else {
+                $("#move").prop("disabled", false);
+                $("#yield").prop("disabled", false);
+                $("#pr").prop("disabled", false);
+                location.reload();
+            }
         }
     })
 

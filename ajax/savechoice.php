@@ -19,8 +19,18 @@
     // Saving player's choice and waiting for other players
     $game->save_choice($y, $pr);
     $flag = False;
+    
+    // Measure time
+    $start = microtime(true);
+    $mes = "";
     while (!$flag) {
         $flag = $game->check();
+        $end = microtime(true);
+        if ($end - $start > 3000) {
+            $mes = "timeout";
+            break;
+        }
     }
     $game->new_round();
     $game->save_game();
+    echo $mes;
