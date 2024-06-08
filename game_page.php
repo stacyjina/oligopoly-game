@@ -45,19 +45,22 @@
             echo "Your firm's profit function:";
             echo "$$ \\pi = p \\cdot y - 0.5y^2 - 10y - 0.15r^2 + r \\sqrt{y}$$";
 
-            // If it is not the 1st round, show last rounds' results
+            // If it is not the 1st round, show last round's results
             if ($game->cur_round != 1) {
                 $table_html = "<table>";
                 $table_html .= "<colgroup> 
-                                    <col span='4'> 
-                                    <col style='border: 2px solid black'> 
+                                    <col span='4'>
                                 </colgroup>";
                 $table_html .= "<tr>";
                 $table_html .= "<th> Player </th> <th> Yield (Y) </th> <th> PR (R) </th> <th> Price (P) </th> <th> Profit </th>";
                 $table_html .= "</tr>";
                 $res = $game->get_round_results();
                 foreach ($res as $id => $list) {
-                    $table_html .= "<tr> <td> Player {$id} </td>";
+                    $bgcolor = "";
+                    if ($id == substr($login, -1, 1)) {
+                        $bgcolor = "style='background-color: #AAD7D9'";
+                    }
+                    $table_html .= "<tr {$bgcolor}> <td> Player {$id} </td>";
                     $table_html .= "<td> {$list["y"]} </td> <td> {$list["r"]} </td>";
                     $table_html .= "<td> {$list["p"]} </td> <td> {$list["profit"]} </td> </tr>";
                 }
@@ -119,15 +122,34 @@
             $res = $game->get_final_results();
             $table_html = "<h2> Final Results </h2> <div class='main'> 
                             <h3> Congratulations! </h3> <table>";
-            $table_html .= "<colgroup> 
-                                <col style='border: 2px solid black'> 
-                            </colgroup>";
             $table_html .= "<tr>";
             $table_html .= "<th> Player </th> <th> Profit </th>";
             $table_html .= "</tr>";
             foreach ($res as $id => $profit) {
-                $table_html .= "<tr> <td> Player {$id} </td>";
+                $bgcolor = "";
+                if ($id == substr($login, -1, 1)) {
+                    $bgcolor = "style='background-color: #AAD7D9'";
+                }
+                $table_html .= "<tr {$bgcolor}> <td> Player {$id} </td>";
                 $table_html .= "<td> {$profit} </td>";
+            }
+            $table_html .= "</table>";
+            $table_html .= "<h3> Result of the last round </h3> <table>";
+            $table_html .= "<colgroup> 
+                                <col span='4'>
+                            </colgroup>";
+            $table_html .= "<tr>";
+            $table_html .= "<th> Player </th> <th> Yield (Y) </th> <th> PR (R) </th> <th> Price (P) </th> <th> Profit </th>";
+            $table_html .= "</tr>";
+            $res = $game->get_round_results();
+            foreach ($res as $id => $list) {
+                $bgcolor = "";
+                if ($id == substr($login, -1, 1)) {
+                    $bgcolor = "style='background-color: #AAD7D9'";
+                }
+                $table_html .= "<tr {$bgcolor}> <td> Player {$id} </td>";
+                $table_html .= "<td> {$list["y"]} </td> <td> {$list["r"]} </td>";
+                $table_html .= "<td> {$list["p"]} </td> <td> {$list["profit"]} </td> </tr>";
             }
             $table_html .= "</table> </div>";
             echo $table_html;

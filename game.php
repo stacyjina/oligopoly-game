@@ -42,7 +42,6 @@
                 $y += $row["yield"];
             }
             $p = $this->max_price * $this->num_players - $y;
-            echo "y = {$y}, p = {$p} <br>";
             $res = [];
             foreach ($list as $key => $value) {
                 $res[$key] = ["y" => $value["yield"], 
